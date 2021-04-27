@@ -27,8 +27,10 @@ namespace MvcSampleWithTest.WebApi
             services.AddApplication();
             services.AddInfrastructure(this.Configuration);
 
-            services.AddControllers()
-                .AddJsonOptions(option =>
+            services.AddControllers(options =>
+                {
+                    options.Filters.Add<ApiExceptionFilterAttribute>();
+                }).AddJsonOptions(option =>
                 {
                     option.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     option.JsonSerializerOptions.WriteIndented = true;

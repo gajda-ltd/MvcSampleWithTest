@@ -5,7 +5,6 @@ namespace MvcSampleWithTest.AutomatedUiTests
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using OpenQA.Selenium;
     using OpenQA.Selenium.Edge;
-    using OpenQA.Selenium.Support.UI;
 
     [TestClass]
     public sealed class AutomatedUiTests : IDisposable
@@ -13,7 +12,15 @@ namespace MvcSampleWithTest.AutomatedUiTests
         private bool disposed = false;
         private IWebDriver driver;
 
-        public AutomatedUiTests() => this.driver = new EdgeDriver();
+        public AutomatedUiTests()
+        {
+            var options = new EdgeOptions
+            {
+                //UseChromium = true,
+            };
+
+            this.driver = new EdgeDriver(options);
+        }
 
         ~AutomatedUiTests()
         {

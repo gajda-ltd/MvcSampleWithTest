@@ -1,8 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -18,5 +17,9 @@
     <ProjectReference Include="..\MvcSampleWithTest.Application\MvcSampleWithTest.Application.csproj" />
     <ProjectReference Include="..\MvcSampleWithTest.Integration\MvcSampleWithTest.Integration.csproj" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <RunSettingsFilePath>$(MSBuildProjectDirectory)\.runsettings</RunSettingsFilePath>
+  </PropertyGroup>
 
 </Project>

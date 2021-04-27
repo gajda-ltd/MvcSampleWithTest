@@ -10,6 +10,8 @@ namespace MvcSampleWithTest.UnitTests
     [TestClass]
     public class UnitTests
     {
+        public TestContext TestContext { get; set; }
+
         private static readonly string[] Summaries = new[]
         {
             "Balmy",
@@ -28,11 +30,12 @@ namespace MvcSampleWithTest.UnitTests
         public async Task TestMethod1()
         {
             //Arrange
-            var command = new GetWeatherForecasts { };
+            var command = new GetWeatherForecasts();
             var handler = new GetWeatherForecastsHandler();
 
             //Act
             var result = await handler.Handle(command, CancellationToken.None);
+            this.TestContext.WriteLine(result.ToString());
 
             //Assert
             result.Should().NotBeNull();
@@ -43,6 +46,19 @@ namespace MvcSampleWithTest.UnitTests
                 item.Summary.Should().BeOneOf(Summaries);
                 item.TemperatureC.Should().BeInRange(-20, 55);
             }
+        }
+
+        [TestMethod]
+        public void TestRunParameters()
+        {
+            //Arrange
+            var expected = "https://www.google.co.uk";
+
+            //Act
+            var result = TestContext.Properties["google"];
+
+            //Assert
+            result.Should().Be(expected);
         }
     }
 }
