@@ -7,6 +7,7 @@ namespace MvcSampleWithTest.IntegrationTests
     using FluentAssertions;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.TestHost;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using MvcSampleWithTest.WebApi;
 
@@ -18,8 +19,14 @@ namespace MvcSampleWithTest.IntegrationTests
 
         public IntegrationTests()
         {
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
+
             var build = new WebHostBuilder()
                 .UseContentRoot(Path.GetDirectoryName(Assembly.GetAssembly(typeof(Startup)).Location))
+                .UseConfiguration(configuration)
                 .ConfigureTestServices(services => { })
                 .UseStartup<Startup>();
             this.server = new TestServer(build);
