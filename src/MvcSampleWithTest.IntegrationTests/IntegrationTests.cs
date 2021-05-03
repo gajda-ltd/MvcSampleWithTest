@@ -1,6 +1,7 @@
 namespace MvcSampleWithTest.IntegrationTests
 {
     using System.IO;
+    using System.Net;
     using System.Net.Http;
     using System.Reflection;
     using System.Threading.Tasks;
@@ -43,6 +44,18 @@ namespace MvcSampleWithTest.IntegrationTests
 
             //Assert
             response.Should().NotBeNullOrWhiteSpace();
+        }
+
+        [TestMethod]
+        public async Task WeatherForecastControllerEndpointNotFoundTest()
+        {
+            //Arrange
+
+            //Act
+            var response = await this.client.GetAsync("/NotExists");
+
+            //Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [TestMethod]

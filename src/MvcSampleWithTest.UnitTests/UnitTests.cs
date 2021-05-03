@@ -1,7 +1,10 @@
 namespace MvcSampleWithTest.UnitTests
 {
+    using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using Application.ViewModels;
     using FluentAssertions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using MvcSampleWithTest.Application.Queries;
@@ -46,6 +49,20 @@ namespace MvcSampleWithTest.UnitTests
                 item.Summary.Should().BeOneOf(Summaries);
                 item.TemperatureC.Should().BeInRange(-20, 55);
             }
+        }
+
+        [TestMethod]
+        public void TestException()
+        {
+            //Arrange
+            GetWeatherForecasts command = null;
+            var handler = new GetWeatherForecastsHandler();
+
+            //Act
+            Func<Task<IReadOnlyList<WeatherForecast>>> action = () => handler.Handle(command, CancellationToken.None);
+
+            //Assert
+            action.Should().ThrowExactly<NullReferenceException>();
         }
 
         [TestMethod]

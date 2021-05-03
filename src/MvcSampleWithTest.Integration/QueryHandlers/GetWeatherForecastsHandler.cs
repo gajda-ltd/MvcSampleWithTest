@@ -27,6 +27,11 @@ namespace MvcSampleWithTest.Integration.QueryHandlers
 
         public async Task<IReadOnlyList<WeatherForecast>> Handle(GetWeatherForecasts request, CancellationToken cancellationToken)
         {
+            if (request is null)
+            {
+                throw new NullReferenceException("Request cannot be null");
+            }
+
             var rng = new Random();
             var weatherForecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
